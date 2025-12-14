@@ -4,6 +4,9 @@
 
 未经修改的源代码在 [main 分支](https://github.com/CJYKK/chatlog_backup/tree/main)，本人不对代码中的任何内容负责。
 
+# 提示
+获取key请前往（https://github.com/ycccccccy/wx_key）下载
+
 更新日志：
 
 1.2025年12月13日同步了wx_key项目相关图片解密处理逻辑
