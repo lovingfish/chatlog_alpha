@@ -36,6 +36,8 @@ var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Start HTTP server",
 	Run: func(cmd *cobra.Command, args []string) {
+		cleanup := initSingleInstance()
+		defer cleanup()
 
 		cmdConf := getServerConfig()
 		log.Info().Msgf("server cmd config: %+v", cmdConf)

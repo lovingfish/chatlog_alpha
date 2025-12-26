@@ -1,7 +1,12 @@
 package chatlog
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/sjzar/chatlog/internal/chatlog"
+	"github.com/sjzar/chatlog/pkg/process"
+	"github.com/sjzar/chatlog/pkg/util"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -35,8 +40,20 @@ var rootCmd = &cobra.Command{
 }
 
 func Root(cmd *cobra.Command, args []string) {
+	cleanup := initSingleInstance()
+	defer cleanup()
+
 	m := chatlog.New()
 	if err := m.Run(""); err != nil {
 		log.Err(err).Msg("failed to run chatlog instance")
 	}
+}
+
+func initSingleInstance() func() {
+	cleanup, err := process.CheckSingleInstance(util.DefaultWorkDir(""))
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error:", err)
+		os.Exit(1)
+	}
+	return cleanup
 }
